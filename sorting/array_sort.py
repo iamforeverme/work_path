@@ -15,16 +15,7 @@ class Bubble(Solution):
                 if data[j-1] > data [j]:
                     self.swap(data,j-1,j)
 
-class Insert(Solution):
-    def sort(self, data,step=1):
-        for i in range(0,len(data),step):
-            ### error start
-            for j in range(i,0,-1*step):
-                ### error end
-                for shift in range(0,step):
-                    if j+shift < len(data):
-                        if data[j-step+shift] > data [j+shift]:
-                            self.swap(data,j-step,j+shift)
+
 
 class Selection(Solution):
     def sort(self,data):
@@ -35,10 +26,21 @@ class Selection(Solution):
                     min=j
             self.swap(data,min,i)
 
+class Insert(Solution):
+    def sort(self, data,step=1,shift=0):
+        for i in range(0,len(data),step):
+            ### error start
+            for j in range(i,0,-1*step):
+                ### error end
+                if j+shift < len(data):
+                    if data[j-step+shift] > data [j+shift]:
+                        self.swap(data,j-step,j+shift)
+
 class Shell(Insert):
     def sort(self,data):
         for step in range(int(len(data)/2),0,-1):
-                super(Shell,self).sort(data,step=step)
+            for shift in range(0,step):
+                super(Shell,self).sort(data,step=step,shift=shift)
 
 class Heap(Solution):
     # for a node i, its root is int((i-1)/2)
@@ -115,6 +117,28 @@ class Quick(Solution):
                 j=j-1
         data[i]=value
         return i
+
+class QuickInsert(Quick):
+    def quick_sort(self,data,start,end):
+        ### error start
+        if not start<end:
+            return
+         ### error end
+        loc= self.partition(data,start,end)
+        if loc-1-start>10:
+            self.quick_sort(data,start,loc-1)
+        else:
+            self.insert_sort(data,start,loc-1)
+        if end-loc-1>10:
+            self.quick_sort(data,loc+1,end)
+        else:
+             self.insert_sort(data,loc+1,end)
+
+    def insert_sort(self, data,start,end):
+        for i in range(start,end+1):
+            for j in range(i,start,-1):
+                if data[j-1] > data [j]:
+                    self.swap(data,j-1,j)
 
 class Merge(Solution):
     def merge(self,data, start,end):

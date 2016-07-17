@@ -1,20 +1,22 @@
+def creat_linked_list_from_array(array):
+    head=None
+    tail=None
+    for item in array:
+        if not head:
+            head=ListNode(item)
+            tail=head
+        else:
+            tail.insert(ListNode(item))
+            tail=tail.next
+    return head
+
 class ListNode(object):
     def __init__(self, x):
         self.val = x
         self.next = None
     def insert(self,node):
         self.next=node
-    def creat_linked_list_from_array(array):
-        head=None
-        tail=None
-        for item in array:
-            if not head:
-                head=ListNode(item)
-                tail=head
-            else:
-                tail.insert(ListNode(item))
-                tail=tail.next
-        return head
+
 class Solution(object):
     def show_list(self,head,tail=None):
         node=head
@@ -140,13 +142,16 @@ class Quick(Solution):
         return head, tail, node
 
 if __name__=="__main__":
-    solution=Quick()
-    # data=[3,9,20,None,None,15,7]
-    head=ListNode(6)
-    head.next=ListNode(5)
-    head.next.next=ListNode(8)
-    head.next.next.next=ListNode(3)
-    head.next.next.next.next=ListNode(7)
-    head.next.next.next.next.next=ListNode(-1)
-    head,tail=solution.sort(head,None)
-    solution.show_list(head,tail)
+    solution=Bubble()
+    data=[3,7,6,4,2,1,-1,3]
+
+    # head=ListNode(6)
+    # head.next=ListNode(5)
+    # head.next.next=ListNode(8)
+    # head.next.next.next=ListNode(3)
+    # head.next.next.next.next=ListNode(7)
+    # head.next.next.next.next.next=ListNode(-1)
+    head=creat_linked_list_from_array(data)
+    solution.show_list(head,None)
+    head=solution.sort(head,None)
+    solution.show_list(head,None)
