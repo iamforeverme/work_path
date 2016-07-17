@@ -6,7 +6,7 @@ class Solution(object):
         data[x]=data[y]
         data[y]=temp
 
-class Bobble(Solution):
+class Bubble(Solution):
     def sort(self, data):
         ### error start
         for i in range(len(data)-1,-1,-1):
@@ -21,8 +21,10 @@ class Insert(Solution):
             ### error start
             for j in range(i,0,-1*step):
                 ### error end
-                if data[j-step] > data [j]:
-                    self.swap(data,j-step,j)
+                for shift in range(0,step):
+                    if j+shift < len(data):
+                        if data[j-step+shift] > data [j+shift]:
+                            self.swap(data,j-step,j+shift)
 
 class Selection(Solution):
     def sort(self,data):
@@ -36,7 +38,7 @@ class Selection(Solution):
 class Shell(Insert):
     def sort(self,data):
         for step in range(int(len(data)/2),0,-1):
-            super(Shell,self).sort(data,step=step)
+                super(Shell,self).sort(data,step=step)
 
 class Heap(Solution):
     # for a node i, its root is int((i-1)/2)
@@ -153,7 +155,8 @@ class Merge(Solution):
         for i in range(len(data)):
             data[i]=result[i]
 
-data=[3,7,6,4,2,1,-1,3]
-solution=Heap()
-solution.sort(data)
-print(data)
+if __name__=="__main__":
+    data=[3,7,6,4,2,1,-1,3]
+    solution=Shell()
+    solution.sort(data)
+    print(data)
